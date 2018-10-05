@@ -11,4 +11,4 @@ The following is a script to get the weather forecast from www.openweathermap.co
 8. `export DATABASE={Enter database name}`
 
 # Run
-1. Generate the report: `python unresponsive.py
+1. Generate the report: `python unresponsive.py`
