@@ -1,0 +1,6 @@
+DateTime==4.2
+mysql-connector-python==8.0.12
+protobuf==3.6.1
+pytz==2018.5
+six==1.11.0
+zope.interface==4.5.0
