@@ -40,8 +40,8 @@ def db_device_data():
             device.update({'Account_Name': name['ACCOUNT_NAME']})
 
         for (dt) in cursor2:
-            device.update({'Date_Stamp': dt['Date_Stamp']})
-            device.update({'Time_Stamp': dt['Time_Stamp']})
+            device.update({'Last_reported_date': dt['Date_Stamp']})
+            device.update({'Last_reported_time': dt['Time_Stamp']})
 
         device_data.append(device)
 

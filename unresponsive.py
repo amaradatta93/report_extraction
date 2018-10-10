@@ -4,6 +4,8 @@ import datetime
 from database import db_device_data
 from parse_util import date_time_conversion, two_days_back, parsed_dict
 
+THRESHOLD_DAYS = input('See all the device which stopped working before how many days? ')
+
 
 def parse_unresponsive_data():
     '''
@@ -19,14 +21,14 @@ def parse_unresponsive_data():
 
     for devices in device_info:
         try:
-            date_time_obj = date_time_conversion(devices['Date_Stamp'], devices['Time_Stamp'])
-            dt_check = two_days_back(date_time_obj)
+            date_time_obj = date_time_conversion(devices['Last_reported_date'], devices['Last_reported_time'])
+            dt_check = two_days_back(date_time_obj, THRESHOLD_DAYS)
             if dt_check and ((devices['Device_Status'] == 'Active') and (devices['Billing_Status'] == 'Active')):
-                # print(devices['Date_Stamp'], devices['Time_Stamp'], devices['Device_Status'], devices['Billing_Status'])
+                # print(devices['Last_reported_date'], devices['Last_reported_time'], devices['Device_Status'], devices['Billing_Status'])
                 parsed_device_list.append(devices)
         except KeyError:
-            devices.update({'Date_Stamp': 'not found'})
-            devices.update({'Time_Stamp': 'not found'})
+            devices.update({'Last_reported_date': 'not found'})
+            devices.update({'Last_reported_time': 'not found'})
     return parsed_device_list
 
 
@@ -38,13 +40,16 @@ def write_to_csv():
     parsed_device_list = parse_unresponsive_data()
     parameter_optimized = parsed_dict(parsed_device_list)
 
-    # csv_columns = ['Account_Name', 'IMEI', 'SIM_No', 'Date_Stamp', 'Time_Stamp', 'Added_On', 'Asset_No', 'Comments']
-    csv_columns = ['Account_Name', 'IMEI', 'Date_Stamp', 'Time_Stamp']
+    # csv_columns = ['Account_Name', 'IMEI', 'SIM_No', 'Last_reported_date', 'Last_reported_time', 'Added_On', 'Asset_No', 'Comments']
+    csv_columns = ['Account_Name', 'IMEI', 'Last_reported_date', 'Last_reported_time']
     csv_name = 'Unresponsive_device_' + str(datetime.datetime.now().date()) + '.csv'
     print('The unresponsive device report is available in "{0}"'.format(csv_name))
 
     try:
         with open(csv_name, 'w') as csvfile:
+            description_text = 'Device not reporting from ' + THRESHOLD_DAYS + ' days'
+            description = csv.writer(csvfile)
+            description.writerow([description_text])
             writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
             writer.writeheader()
             for data in parameter_optimized:

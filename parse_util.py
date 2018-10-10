@@ -13,7 +13,7 @@ def date_time_conversion(date_str, time_str):
     return date_time
 
 
-def two_days_back(dt_obj):
+def two_days_back(dt_obj, threshold_days):
     '''
     Check if the difference between the present time and the date parameter is less than two days
     :param dt_obj: Date_Time object
@@ -21,7 +21,7 @@ def two_days_back(dt_obj):
     '''
     now = datetime.datetime.strptime(datetime.datetime.now().strftime('%d.%m.%YT%H:%M:%S'), '%d.%m.%YT%H:%M:%S')
     diff = now - dt_obj
-    return diff.days > datetime.timedelta(days=700).days
+    return diff.days > datetime.timedelta(days=int(threshold_days)).days
 
 
 def parsed_dict(unparsed_dict):
@@ -36,8 +36,8 @@ def parsed_dict(unparsed_dict):
             'Account_Name': each_dict['Account_Name'],
             'IMEI': each_dict['IMEI'],
             # 'SIM_No': each_dict['SIM_No'],
-            'Date_Stamp': each_dict['Date_Stamp'],
-            'Time_Stamp': each_dict['Time_Stamp']
+            'Last_reported_date': each_dict['Last_reported_date'],
+            'Last_reported_time': each_dict['Last_reported_time']
             # 'Added_On': each_dict['Added_On'],
             # 'Asset_No': each_dict['Asset_No'],
             # 'Comments': each_dict['Comments']
