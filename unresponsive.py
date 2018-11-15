@@ -42,8 +42,8 @@ def write_to_csv():
     parsed_device_list = parse_unresponsive_data()
     parameter_optimized = parsed_dict(parsed_device_list)
 
-    # csv_columns = ['Account_Name', 'IMEI', 'SIM_No', 'Last_reported_date', 'Last_reported_time', 'Added_On', 'Asset_No', 'Comments']
-    csv_columns = ['Account_Name', 'IMEI', 'Last_reported_date', 'Last_reported_time']
+    csv_columns = ['Account_Name', 'IMEI', 'SIM_No', 'Last_reported_date', 'Last_reported_time', 'Added_On', 'Asset_No']
+    # csv_columns = ['Account_Name', 'IMEI', 'Last_reported_date', 'Last_reported_time']
     csv_name = 'Unresponsive_device_' + str(datetime.datetime.now().date()) + '.csv'
     print('The unresponsive device report is available in "{0}"'.format(csv_name))
 
