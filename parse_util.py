@@ -35,11 +35,11 @@ def parsed_dict(unparsed_dict):
         parameter_optimized.append({
             'Account_Name': each_dict['Account_Name'],
             'IMEI': each_dict['IMEI'],
-            # 'SIM_No': each_dict['SIM_No'],
+            'SIM_No': each_dict['SIM_No'],
             'Last_reported_date': each_dict['Last_reported_date'],
             'Last_reported_time': each_dict['Last_reported_time']
-            # 'Added_On': each_dict['Added_On'],
-            # 'Asset_No': each_dict['Asset_No'],
+            'Added_On': each_dict['Added_On'],
+            'Asset_No': each_dict['Asset_No'],
             # 'Comments': each_dict['Comments']
         })
     return parameter_optimized

@@ -1,5 +1,5 @@
 import csv
-import datetime
+import datetime, pprint
 
 from database import db_device_data
 from parse_util import date_time_conversion, two_days_back, parsed_dict
@@ -18,6 +18,8 @@ def parse_unresponsive_data():
     '''
     device_info = db_device_data()
     parsed_device_list = []
+
+    # pprint.pprint(device_info)
 
     for devices in device_info:
         try:
@@ -47,7 +49,7 @@ def write_to_csv():
 
     try:
         with open(csv_name, 'w') as csvfile:
-            description_text = 'Device not reporting from ' + THRESHOLD_DAYS + ' days'
+            description_text = 'Device which have not reported since or before last ' + THRESHOLD_DAYS + ' days'
             description = csv.writer(csvfile)
             description.writerow([description_text])
             writer = csv.DictWriter(csvfile, fieldnames=csv_columns)

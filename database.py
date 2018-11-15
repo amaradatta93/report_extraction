@@ -5,6 +5,7 @@ import mysql.connector
 USER = os.getenv('USER')
 PASSWORD = os.getenv('PASSWORD')
 HOST = os.getenv('HOST')
+PORT = os.getenv('PORT')
 DATABASE = os.getenv('DATABASE')
 
 
@@ -17,7 +18,7 @@ def db_device_data():
     '''
     device_data = []
 
-    cnx = mysql.connector.connect(user=USER, password=PASSWORD, host=HOST, database=DATABASE)
+    cnx = mysql.connector.connect(user=USER, password=PASSWORD, host=HOST,port=PORT, database=DATABASE)
     cursor1 = cnx.cursor(dictionary=True, buffered=True)
     cursor2 = cnx.cursor(dictionary=True, buffered=True)
     cursor3 = cnx.cursor(dictionary=True, buffered=True)
