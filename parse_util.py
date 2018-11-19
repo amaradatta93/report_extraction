@@ -1,4 +1,4 @@
-import datetime
+import datetime, pprint
 
 
 def date_time_conversion(date_str, time_str):
@@ -35,7 +35,8 @@ def parsed_dict(unparsed_dict):
         parameter_optimized.append({
             'Account_Name': each_dict['Account_Name'],
             'IMEI': each_dict['IMEI'],
-            'SIM_No': each_dict['SIM_No'],
+            'Device': each_dict['Device'],
+            # 'SIM_No': str(each_dict['SIM_No']),
             'Last_reported_date': each_dict['Last_reported_date'],
             'Last_reported_time': each_dict['Last_reported_time'],
             'Added_On': each_dict['Added_On'],

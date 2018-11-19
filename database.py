@@ -1,6 +1,7 @@
-import os
+import os, pprint
 
 import mysql.connector
+
 
 USER = os.getenv('USER')
 PASSWORD = os.getenv('PASSWORD')
@@ -21,6 +22,7 @@ def db_device_data():
     cursor1 = cnx.cursor(dictionary=True, buffered=True)
     cursor2 = cnx.cursor(dictionary=True, buffered=True)
     cursor3 = cnx.cursor(dictionary=True, buffered=True)
+    cursor4 = cnx.cursor(dictionary=True, buffered=True)
 
     device_info = ("SELECT * FROM DEVICE_REGISTER "
                    "WHERE ACCOUNT_ID IN (SELECT ACCOUNT_ID FROM ACCOUNT ) ")
@@ -28,6 +30,8 @@ def db_device_data():
                     "WHERE ACCOUNT_ID = %s ")
     imei_date = ("SELECT Date_Stamp, Time_Stamp FROM DEVICE_DATA_VIEW "
                  "WHERE IMEI = %s ")
+    device_name = ("SELECT Device_Type FROM DEVICE_TYPE "
+                 "WHERE Device_Type_ID = %s ")
 
     cursor1.execute(device_info)
     for device in cursor1:
@@ -36,8 +40,13 @@ def db_device_data():
 
         cursor3.execute(account_name, (device['Account_ID'],))
 
+        cursor4.execute(device_name, (device['Device_Type_ID'],))
+
         for name in cursor3:
             device.update({'Account_Name': name['ACCOUNT_NAME']})
+
+        for device_type in cursor4:
+            device.update({'Device': device_type['Device_Type']})
 
         for (dt) in cursor2:
             device.update({'Last_reported_date': dt['Date_Stamp']})
@@ -49,4 +58,5 @@ def db_device_data():
     cursor2.close()
     cursor1.close()
     cnx.close()
+    # pprint.pprint(device_data)
     return device_data
